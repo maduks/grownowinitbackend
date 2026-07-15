@@ -5,6 +5,8 @@ const eventSchema = new mongoose.Schema({
   date: { type: String, required: true }, // Format YYYY-MM-DD
   description: { type: String, required: true },
   location: { type: String, default: null },
+  tag: { type: String, default: null },
+  color: { type: String, default: null },
   isFeatured: { type: Boolean, default: false },
 }, {
   toJSON: { virtuals: true },

@@ -23,13 +23,15 @@ export const getEvents = async (req, res) => {
 // @access  Private (Admin)
 export const createEvent = async (req, res) => {
   try {
-    const { title, date, description, location, isFeatured } = req.body;
+    const { title, date, description, location, tag, color, isFeatured } = req.body;
 
     const event = new Event({
       title,
       date,
       description,
       location,
+      tag,
+      color,
       isFeatured,
     });
 
@@ -56,6 +58,8 @@ export const updateEvent = async (req, res) => {
       event.date = req.body.date || event.date;
       event.description = req.body.description || event.description;
       if (req.body.location !== undefined) event.location = req.body.location;
+      if (req.body.tag !== undefined) event.tag = req.body.tag;
+      if (req.body.color !== undefined) event.color = req.body.color;
       if (req.body.isFeatured !== undefined) event.isFeatured = req.body.isFeatured;
 
       const updatedEvent = await event.save();
