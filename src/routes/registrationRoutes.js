@@ -1,6 +1,6 @@
 import express from 'express';
 import { createRegistration, getRegistrations, getRegistrationById } from '../controllers/registrationController.js';
-import { protect } from '../middleware/auth.js';
+import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/registrations', createRegistration);
 
 // Admin routes for fetching data
-router.get('/admin/registrations', protect, getRegistrations);
-router.get('/admin/registrations/:id', protect, getRegistrationById);
+router.get('/admin/registrations', protect, authorize('admin'), getRegistrations);
+router.get('/admin/registrations/:id', protect, authorize('admin'), getRegistrationById);
 
 export default router;

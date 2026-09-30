@@ -1,11 +1,12 @@
 import Event from '../models/Event.js';
 
-// @desc    List all events
+// @desc    List events (unpublished events are only returned to signed-in staff)
 // @route   GET /admin/events
 // @access  Public
 export const getEvents = async (req, res) => {
   try {
-    const events = await Event.find({}).sort({ date: 1 });
+    const filter = req.user ? {} : { published: { $ne: false } };
+    const events = await Event.find(filter).sort({ date: 1 });
     const formatted = events.map(e => {
       const obj = e.toJSON();
       delete obj._id;
@@ -23,7 +24,7 @@ export const getEvents = async (req, res) => {
 // @access  Private (Admin)
 export const createEvent = async (req, res) => {
   try {
-    const { title, date, description, location, tag, color, isFeatured } = req.body;
+    const { title, date, description, location, tag, color, isFeatured, published } = req.body;
 
     const event = new Event({
       title,
@@ -33,6 +34,7 @@ export const createEvent = async (req, res) => {
       tag,
       color,
       isFeatured,
+      published,
     });
 
     const savedEvent = await event.save();
@@ -61,6 +63,7 @@ export const updateEvent = async (req, res) => {
       if (req.body.tag !== undefined) event.tag = req.body.tag;
       if (req.body.color !== undefined) event.color = req.body.color;
       if (req.body.isFeatured !== undefined) event.isFeatured = req.body.isFeatured;
+      if (req.body.published !== undefined) event.published = req.body.published;
 
       const updatedEvent = await event.save();
       const obj = updatedEvent.toJSON();

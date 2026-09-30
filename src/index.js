@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import registrationRoutes from './routes/registrationRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import contentRoutes from './routes/contentRoutes.js';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ connectDB();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 app.use('/v1/auth', authRoutes);
 
@@ -24,6 +25,7 @@ app.use('/v1/auth', authRoutes);
 app.use('/v1', registrationRoutes);
 app.use('/v1', eventRoutes);
 app.use('/v1', contactRoutes);
+app.use('/v1', contentRoutes);
 
 app.get('/', (req, res) => {
   res.send('GET Initiative API is running...');

@@ -8,6 +8,7 @@ const eventSchema = new mongoose.Schema({
   tag: { type: String, default: null },
   color: { type: String, default: null },
   isFeatured: { type: Boolean, default: false },
+  published: { type: Boolean, default: true },
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
