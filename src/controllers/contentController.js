@@ -9,6 +9,7 @@ export const CONTENT_KEYS = [
   'journey',
   'tiers',
   'stats',
+  'pulse',
   'stories',
   'eventHistory',
 ];
